@@ -37,20 +37,36 @@ class Tweet {
         return "";
     }
 
-    get activityType():string {
-        if (this.source != 'completed_event') {
-            return "unknown";
-        }
-        //TODO: parse the activity type from the text of the tweet
-        return "";
-    }
+    get activityType(): string {
+        if (this.source !== "completed_event" || !this.distance) return "unknown";
+
+        const words: string[] = this.text.toLowerCase().split(" ");
+        const unitIndex: number = words.indexOf("km") !== -1 ? words.indexOf("km") : words.indexOf("mi");
+
+        // Pick activity word after distance or after "completed"
+        const activityIndex: number =
+            unitIndex !== -1 ? unitIndex + 1 : words.indexOf("completed") + 1;
+
+        let activity: string =
+            activityIndex > 0 && activityIndex < words.length ? words[activityIndex] : "unknown";
+
+        return activity;
+}
+
 
     get distance():number {
         if(this.source != 'completed_event') {
             return 0;
         }
         //TODO: prase the distance from the text of the tweet
-        return 0;
+        const split_text: string[] = this.text.split(" ");
+
+        if (split_text[4] != "mi" && split_text[4] != "km") return 0;
+        const multiplier : number = split_text[4] == "mi" ? 1 : 0.621371
+        const dist: number = Number(split_text[3]) * multiplier;
+        
+        
+        return dist;
     }
 
     getHTMLTableRow(rowNumber:number):string {

@@ -28,32 +28,27 @@ function parseTweets(runkeeper_tweets) {
 	live = 0;
 	achievement = 0;
 	misc = 0;
-	console.log("hello: " + completed);
+	
 	for (i = 0; i < tweet_array.length; ++i)
 	{
-		
 		if (tweet_array[i].source === "completed_event") ++completed;
 		else if (tweet_array[i].source === "achievement") ++achievement;
 		else if (tweet_array[i].source === "live-event") ++live;
 		else ++misc;
 	}
-	console.log("hello: " + completed);
-	console.log("hello: " + live);
-	console.log("hello: " + achievement);
-	console.log("hello: " + misc);
 
 
 	document.getElementsByClassName('completedEvents')[0].innerText = completed;
-	document.getElementsByClassName('completedEventsPct')[0].innerText = (completed / tweet_array.length).toFixed(2) + '%';
+	document.getElementsByClassName('completedEventsPct')[0].innerText = ((completed / tweet_array.length)*100).toFixed(2) + '%';
 
 	document.getElementsByClassName('liveEvents')[0].innerText = live;
-	document.getElementsByClassName('liveEventsPct')[0].innerText = (live / tweet_array.length).toFixed(2);
+	document.getElementsByClassName('liveEventsPct')[0].innerText = ((live / tweet_array.length)*100).toFixed(2) + "%";
 
 	document.getElementsByClassName('achievements')[0].innerText = achievement;
-	document.getElementsByClassName('achievementsPct')[0].innerText = (achievement / tweet_array.length).toFixed(2);
+	document.getElementsByClassName('achievementsPct')[0].innerText = ((achievement / tweet_array.length)*100).toFixed(2) + "%";
 
 	document.getElementsByClassName('miscellaneous')[0].innerText = misc;
-	document.getElementsByClassName('miscellaneousPct')[0].innerText = (misc / tweet_array.length).toFixed(2);	
+	document.getElementsByClassName('miscellaneousPct')[0].innerText = ((misc / tweet_array.length)*100).toFixed(2) + "%";	
 	
 	written = 0;
 	for (i = 0; i < tweet_array.length; ++i)
@@ -68,7 +63,7 @@ function parseTweets(runkeeper_tweets) {
 	
 	document.getElementsByClassName('completedEvents')[1].innerText = completed;
 	document.getElementsByClassName('written')[0].innerText = written;
-	document.getElementsByClassName('writtenPct')[0].innerText = (written / completed).toFixed(2);
+	document.getElementsByClassName('writtenPct')[0].innerText = ((written / completed)*100).toFixed(2) + "%";
 
 
 }

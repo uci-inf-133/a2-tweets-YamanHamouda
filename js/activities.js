@@ -9,6 +9,65 @@ function parseTweets(runkeeper_tweets) {
 		return new Tweet(tweet.text, tweet.created_at);
 	});
 
+	console.log(tweet_array[0].distance);
+	console.log(tweet_array[0].activityType);
+
+	let type_dict_amnt = {};
+	let type_dict_dist = {};
+
+	let weekdayCount = 0;
+	let weekendCount = 0;
+
+	for (let i = 0; i < tweet_array.length; ++i) 
+	{
+		let type = tweet_array[i].activityType;
+		if (type == "unknown") continue; //skip unkowns
+		let dist = tweet_array[i].distance;
+		let time = new Date(tweet_array[i].time);
+
+		
+		let day = time.getDay(); 
+		if (day === 0 || day === 6) weekendCount++;
+		else weekdayCount++;
+
+		if (!type_dict_amnt[type]) {
+			type_dict_amnt[type] = 0;
+			type_dict_dist[type] = 0;
+		}
+
+		type_dict_amnt[type] += 1;
+		type_dict_dist[type] += dist;
+	}
+
+	// divide to get average distances
+	for (let type in type_dict_dist) 
+		type_dict_dist[type] = type_dict_dist[type] / type_dict_amnt[type];
+	
+
+	console.log(type_dict_dist);
+
+	document.getElementById("numberActivities").innerText = Object.keys(type_dict_dist).length;
+
+	let sorted = Object.keys(type_dict_dist);
+
+	// sort from largest to smallest average distance
+	sorted.sort((a, b) => type_dict_dist[b] - type_dict_dist[a]);
+
+	document.getElementById("firstMost").innerText  = sorted[0];
+	document.getElementById("secondMost").innerText = sorted[1];
+	document.getElementById("thirdMost").innerText  = sorted[2];
+
+	document.getElementById("longestActivityType").innerHTML = sorted[0];
+	document.getElementById("shortestActivityType").innerHTML = sorted[sorted.length - 1];
+
+	// determine which has more activities
+	let result = weekdayCount > weekendCount ? "Weekdays" : "Weekends";
+	document.getElementById("weekdayOrWeekendLonger").innerHTML = result;
+
+
+
+
+
 	//TODO: create a new array or manipulate tweet_array to create a graph of the number of tweets containing each type of activity.
 
 	activity_vis_spec = {
