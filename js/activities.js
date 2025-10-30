@@ -50,7 +50,7 @@ function parseTweets(runkeeper_tweets) {
 
 	let sorted = Object.keys(type_dict_dist);
 
-	// sort from largest to smallest average distance
+	//sort from largest to smallest average distance
 	sorted.sort((a, b) => type_dict_dist[b] - type_dict_dist[a]);
 
 	document.getElementById("firstMost").innerText  = sorted[0];
@@ -60,7 +60,7 @@ function parseTweets(runkeeper_tweets) {
 	document.getElementById("longestActivityType").innerHTML = sorted[0];
 	document.getElementById("shortestActivityType").innerHTML = sorted[sorted.length - 1];
 
-	// determine which has more activities
+	
 	let result = weekdayCount > weekendCount ? "Weekdays" : "Weekends";
 	document.getElementById("weekdayOrWeekendLonger").innerHTML = result;
 

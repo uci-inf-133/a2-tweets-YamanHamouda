@@ -69,8 +69,21 @@ class Tweet {
         return dist;
     }
 
-    getHTMLTableRow(rowNumber:number):string {
-        //TODO: return a table row which summarizes the tweet with a clickable link to the RunKeeper activity
-        return "<tr></tr>";
+    getHTMLTableRow(rowNumber: number): string 
+    {
+    
+        const tcoRegex = /https:\/\/t\.co\/\w+/g;
+        const linkedText = this.text.replace(tcoRegex, (m) => {
+            return `<a href="${m}" target="_blank" rel="noopener noreferrer">${m}</a>`;
+        });
+
+        return `
+            <tr>
+            <td>${rowNumber}</td>
+            <td>${this.activityType}</td>
+            <td>${linkedText}</td>
+            </tr>
+        `;
     }
+
 }
