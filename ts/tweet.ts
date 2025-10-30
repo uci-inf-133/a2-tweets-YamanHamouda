@@ -74,7 +74,7 @@ class Tweet {
     
         const tcoRegex = /https:\/\/t\.co\/\w+/g;
         const linkedText = this.text.replace(tcoRegex, (m) => {
-            return `<a href="${m}" target="_blank" rel="noopener noreferrer">${m}</a>`;
+            return `<a href="${m}" target="_blank" rel="noopener noreferrer">${m}</a>`; //ai'd this lol
         });
 
         return `
